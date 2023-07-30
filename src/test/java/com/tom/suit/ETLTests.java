@@ -1,4 +1,4 @@
-package com.tom;
+package com.tom.suit;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tom.config.EmbeddedKafkaTestContext;
@@ -26,7 +26,7 @@ import java.util.concurrent.ExecutionException;
 
 @Slf4j
 @ActiveProfiles("test")
-public class MessageProcessingApplicationTest extends EmbeddedKafkaTestContext {
+public class ETLTests extends EmbeddedKafkaTestContext {
 
     @Autowired
     byte[] fooMessage;
@@ -58,6 +58,7 @@ public class MessageProcessingApplicationTest extends EmbeddedKafkaTestContext {
     @SneakyThrows
     @Test
     public void givenInvalidFooWhenMessageIsSentThenExceptionIsThrown() {
+
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
         @Cleanup val consumer = getConsumerFactory().createConsumer();
@@ -84,16 +85,18 @@ public class MessageProcessingApplicationTest extends EmbeddedKafkaTestContext {
     public void givenFooWhenMessageIsSentThenTheMessageIsTransformed() {
 
         @Cleanup val consumer = getConsumerFactory().createConsumer();
-        consumer.subscribe(Collections.singleton(OUTPUT_TOPIC));
+        consumer.subscribe(Collections.singleton(INPUT_TOPIC));
+        consumer.poll(Duration.ofSeconds(5));
 
         try {
             testProducer.sendDefault(fooMessage).get();
+            testProducer.flush();
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
 
         Thread.sleep(3000);
-
+        consumer.subscribe(Collections.singleton(OUTPUT_TOPIC));
         val consumerRecords = consumer.poll(Duration.ofSeconds(5));
         consumer.commitSync();
 

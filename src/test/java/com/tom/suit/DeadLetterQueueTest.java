@@ -1,4 +1,4 @@
-package com.tom;
+package com.tom.suit;
 
 import com.tom.config.EmbeddedKafkaTestContext;
 import com.tom.service.MessageService;
@@ -44,7 +44,7 @@ public class DeadLetterQueueTest extends EmbeddedKafkaTestContext {
 
         @Cleanup val consumer = getConsumerFactory().createConsumer();
 
-        consumer.subscribe(Collections.singleton(DLQ_TOPIC));
+        consumer.subscribe(Collections.singleton(INPUT_TOPIC));
 
         try {
             testProducer.sendDefault("ERRONEOUS".getBytes(StandardCharsets.UTF_8)).get();

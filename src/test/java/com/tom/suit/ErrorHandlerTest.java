@@ -1,4 +1,4 @@
-package com.tom;
+package com.tom.suit;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tom.config.EmbeddedKafkaTestContext;
@@ -61,7 +61,7 @@ public class ErrorHandlerTest extends EmbeddedKafkaTestContext {
         consumer.subscribe(Collections.singleton(OUTPUT_TOPIC));
 
         testProducer.sendDefault("ERRONEOUS".getBytes(StandardCharsets.UTF_8)).get();
-
+        testProducer.flush();
         Thread.sleep(3000);
 
         consumer.poll(Duration.ofSeconds(5));
