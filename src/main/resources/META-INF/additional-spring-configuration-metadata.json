@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "spring.application.env",
+      "type": "java.lang.String",
+      "description": "The environment where the application is running to be displayed in the micrometer metrics."
+  }
+] }

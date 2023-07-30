@@ -1,0 +1,6 @@
+spring:
+  kafka:
+    consumer:
+      retries:
+        retry-exceptions:
+          com.fasterxml.jackson.core.JsonParseException: true

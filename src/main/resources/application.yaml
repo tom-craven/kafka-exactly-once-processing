@@ -1,0 +1,51 @@
+spring:
+  application:
+    name: exactly-once-message-processing-application
+    env: local
+  kafka:
+    bootstrap-servers: ${BOOTSTRAP_SERVERS:localhost:9092}
+    template:
+      default-topic: output-topic
+    consumer:
+      concurrency: ${CONSUMER_CONCURRENCY:3}
+      default-topic: input-topic
+      dlq-topic: dlq-topic
+      auto-offset-reset: latest
+      value-deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
+      key-deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
+      group-id: ${spring.application.name}-grp
+      enable-auto-commit: false
+      retries:
+        retry-by-default: true
+        number-retries: 3
+        retry-exceptions:
+          com.tom.model.FooDeserializationException: false
+          com.tom.model.BarSerializationException: false
+          com.fasterxml.jackson.core.JsonParseException: false
+          java.lang.NullPointerException: false
+      properties:
+        isolation.level: read_committed
+        default.api.timeout.ms: 300000
+        fetch.min.bytes: 100000
+        fetch.max.wait.ms: 500
+    producer:
+      properties:
+        delivery.timeout.ms: 12000
+        request.timeout.ms: 10000
+        batch.size: 10000
+        linger.ms: 50
+        enable.idempotence: true
+      transaction-id-prefix: tx-${spring.kafka.consumer.group-id}
+      value-serializer: org.apache.kafka.common.serialization.ByteArraySerializer
+      key-serializer: org.apache.kafka.common.serialization.ByteArraySerializer
+      acks: -1
+    client-id: ${spring.application.name}
+
+server:
+  port: ${SPRING_SERVER_PORT:8083}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: [ health,info,env,env-toMatch,metrics,metrics-requiredMetricName,prometheus ]
+
