@@ -2,14 +2,10 @@ package com.tom;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tom.config.EmbeddedKafkaTestContext;
-import com.tom.model.Bar;
 import com.tom.service.MessageService;
-import jakarta.validation.Valid;
 import lombok.Cleanup;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
-import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

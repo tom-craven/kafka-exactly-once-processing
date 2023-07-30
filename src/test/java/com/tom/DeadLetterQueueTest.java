@@ -10,7 +10,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.util.Assert;
 
 import java.nio.charset.StandardCharsets;
@@ -19,7 +18,6 @@ import java.util.Collections;
 import java.util.concurrent.ExecutionException;
 
 @Slf4j
-@ActiveProfiles
 public class DeadLetterQueueTest extends EmbeddedKafkaTestContext {
 
     @Autowired

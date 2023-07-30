@@ -1,5 +1,6 @@
 package com.tom.config;
 
+import io.micrometer.core.instrument.Counter;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.apache.kafka.clients.admin.NewTopic;
@@ -46,10 +47,12 @@ public class KafkaConfig implements ApplicationListener<KafkaEvent> {
 
     @Bean
     DefaultErrorHandler errorHandler(
+            @Autowired Counter dlqCounter,
             @Value("${spring.kafka.consumer.dlq-topic}") String deadLetterQueue
     ) {
         DeadLetterPublishingRecoverer deadLetterPublishingRecoverer = new DeadLetterPublishingRecoverer(template,
                 (rec, ex) -> {
+                    dlqCounter.increment();
                     log.error("[DLQ RESOLVER] - Message with key {} has been sent to DLQ with exception", rec.key(), ex);
                     return new TopicPartition(deadLetterQueue, 0);
                 });

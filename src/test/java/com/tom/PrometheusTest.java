@@ -13,7 +13,6 @@ import org.springframework.boot.test.autoconfigure.actuate.observability.AutoCon
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.nio.charset.StandardCharsets;
@@ -22,7 +21,6 @@ import java.nio.charset.StandardCharsets;
 @AutoConfigureObservability
 @SpringBootTest(classes = {MessageProcessingApplication.class},
         webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT, properties = {"server.port=9999"})
-@ActiveProfiles({"local", "test"})
 public class PrometheusTest extends EmbeddedKafkaTestContext {
     @Autowired
     KafkaConsumer kafkaListenerHandler;
@@ -48,7 +46,7 @@ public class PrometheusTest extends EmbeddedKafkaTestContext {
     public void givenPrometheusWhenDLQMessageIsSentThenCounterIsIncremented() {
         testProducer.sendDefault("BAD".getBytes(StandardCharsets.UTF_8)).get();
 
-        Thread.sleep(4000);
+        Thread.sleep(5000);
 
         val response = webClient.get()
                 .uri("http://localhost:" + port + "/actuator/metrics/dlq.counter")

@@ -28,9 +28,6 @@ import java.util.concurrent.ExecutionException;
 @ActiveProfiles("test")
 public class MessageProcessingApplicationTest extends EmbeddedKafkaTestContext {
 
-    private static final CharSequence SEEKS_TO_CURRENT_OFFSET = "Seek to current after exception";
-    private static final CharSequence LOGS_ERROR_OFFSET = "ERROR - PARTITION";
-
     @Autowired
     byte[] fooMessage;
     @Autowired
