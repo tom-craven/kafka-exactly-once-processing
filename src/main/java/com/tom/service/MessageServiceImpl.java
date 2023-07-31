@@ -39,7 +39,10 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public <R> Mono<Bar> transfer(Foo foo) {
         return Mono.just(foo)
-                .map(foo1 -> Bar.builder().name(foo1.getName()).build());
+                .map(foo1 -> Bar
+                        .builder()
+                        .number(foo1.getNumber())
+                        .name(foo1.getName()).build());
     }
 
     @Override
