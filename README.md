@@ -4,7 +4,7 @@
 
 ## Overview
 
-A Spring Kafka application for processing Foo messages in Bar messages. The system uses transactions for exactly-once processing semantics 
+A Spring Kafka application for processing Foo messages into Bar messages. The system uses transactions for exactly-once processing semantics 
 and has an effective retry mechanism which comes with a micrometer counter for messages sent to the DLQ. 
 
 The Test classes use an embedded Kafka Broker for easy local development and has utilities for producing and consuming from the local application instance.
@@ -14,13 +14,13 @@ The Test classes use an embedded Kafka Broker for easy local development and has
 
 ## Interfaces
 
-| Client | Type                   | Description                                     | 
-|--------|------------------------|-------------------------------------------------|
-| Kafka  | Topic Consumer         | consumes message from 'input-topic'             |
-| Kafka  | Topic ErrorHandler     | send erroneous message to 'dlq-topic'           |
-| Kafka  | Topic Producer         | send processed messages to 'output-topic'       |
-| Kafka  | Consumer Group         | exactly-once-message-processing-application-grp |
-| Web    | Actuator REST Endpoint | actuator/health, */info, */env                  |
+| Client | Type                   | Description                                          | 
+|--------|------------------------|------------------------------------------------------|
+| Kafka  | Topic Consumer         | consumes message from 'input-topic'                  |
+| Kafka  | Topic ErrorHandler     | send erroneous message to 'dlq-topic'                |
+| Kafka  | Topic Producer         | send processed messages to 'output-topic'            |
+| Kafka  | Consumer Group         | exactly-once-message-processing-application-grp      |
+| Web    | Actuator REST Endpoint | actuator/health, */info, */env */metrics/dlq.counter |
 
 ## Getting Started
 
