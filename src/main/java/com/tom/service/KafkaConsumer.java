@@ -24,11 +24,11 @@ import static com.tom.Constants.RECEIVED_PARTITION_OFFSET;
 public class KafkaConsumer {
 
     private final KafkaTemplate<byte[], byte[]> kt;
-    private final MessageService orderService;
+    private final MessageService messageService;
 
-    public KafkaConsumer(KafkaTemplate<byte[], byte[]> kt, MessageService orderService) {
+    public KafkaConsumer(KafkaTemplate<byte[], byte[]> kt, MessageService messageService) {
         this.kt = kt;
-        this.orderService = orderService;
+        this.messageService = messageService;
     }
 
     @KafkaHandler
@@ -44,7 +44,7 @@ public class KafkaConsumer {
 
     private KafkaOperations.OperationsCallback<byte[], byte[], Boolean> processMessage(String offset, String partitionID, Acknowledgment ack, byte[] payload) {
         return operations -> {
-            orderService
+            messageService
                     .process(payload)
                     .doOnNext(kt::send)
                     .doOnSuccess(message -> {
