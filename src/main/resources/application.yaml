@@ -20,7 +20,6 @@ spring:
         number-retries: 3
         retry-exceptions:
           com.tom.model.FooDeserializationException: false
-          com.tom.model.BarSerializationException: false
           com.fasterxml.jackson.core.JsonParseException: false
           java.lang.NullPointerException: false
       properties:
