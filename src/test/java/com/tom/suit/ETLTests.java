@@ -90,13 +90,11 @@ public class ETLTests extends EmbeddedKafkaTestContext {
 
         try {
             testProducer.sendDefault(fooMessage).get();
-            testProducer.flush();
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
 
         Thread.sleep(3000);
-        consumer.subscribe(Collections.singleton(OUTPUT_TOPIC));
         val consumerRecords = consumer.poll(Duration.ofSeconds(5));
         consumer.commitSync();
 
