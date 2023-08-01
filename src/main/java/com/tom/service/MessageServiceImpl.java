@@ -19,8 +19,8 @@ import java.util.Set;
 @Slf4j
 @Service
 public class MessageServiceImpl implements MessageService {
-    private final Validator validator;
     final ObjectMapper objectMapper;
+    private final Validator validator;
 
     public MessageServiceImpl(ObjectMapper objectMapper, Validator validator) {
         this.objectMapper = objectMapper;
