@@ -49,7 +49,7 @@ Example:
 git clone git@github.com:tom-craven/exactly-once-processing.git
 ```
 
-2. **Build via gradle**
+1. **Build via gradle**
 
    Execute the following command from the parent directory:
 
@@ -104,13 +104,13 @@ Kafka instance visible to the dockerized client.
 advertised.listeners=PLAINTEXT://<local-machine-ip>:9092
 ```
 
-3. **Build the Docker**
+**Build the Docker**
 
 ```sh
 docker build -t message-processing-application .
 ```
 
-2. **Run the Docker**
+**Run the Docker**
 
 If you are developing docker locally you can add "sleep infinity" to pause the docker after it starts and attach to
 inspect it.
@@ -139,10 +139,10 @@ Example:
 
 For further reference, please consider the following:
 
-* [Spring Boot](https://docs.spring.io/spring-boot/docs/2.6.3/reference/html/)
+* [Spring Boot](https://docs.spring.io/spring-boot/docs/3.1.x/reference/html/)
 * [Gradle](https://docs.gradle.org/current/userguide/userguide.html)
 * [Docker](https://docs.docker.com/)
 * [Spring for Apache Kafka](https://docs.spring.io/spring-kafka/docs/current/reference/html/)
-* [Spring Actuator](https://docs.spring.io/spring-boot/docs/2.6.3/actuator-api/htmlsingle/)
+* [Spring Actuator](https://docs.spring.io/spring-boot/docs/3.1.x/actuator-api/htmlsingle/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
