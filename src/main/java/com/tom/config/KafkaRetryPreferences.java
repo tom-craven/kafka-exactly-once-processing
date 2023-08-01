@@ -19,12 +19,14 @@ public class KafkaRetryPreferences {
     @SneakyThrows
     Map<Class<? extends Throwable>, Boolean> configureDefaultClassifier() {
         Map<Class<? extends Throwable>, Boolean> classified = new HashMap<>();
-        for (Map.Entry<String, Boolean> entry : retryExceptions.entrySet()) {
-            String s = entry.getKey();
-            Boolean aBoolean = entry.getValue();
-            //noinspection unchecked
-            classified.put((Class<? extends Throwable>) Class.forName(s), aBoolean);
-        }
+        retryExceptions.forEach((key, value) -> {
+            try {
+                //noinspection unchecked
+                classified.put((Class<? extends Throwable>) Class.forName(key), value);
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException("Declared class for retry classifier could not be found, does it exist in the package?");
+            }
+        });
         return classified;
     }
 }
