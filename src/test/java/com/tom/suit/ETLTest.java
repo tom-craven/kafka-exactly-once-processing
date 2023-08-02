@@ -104,7 +104,7 @@ public class ETLTest extends EmbeddedKafkaTestContext {
 
     @SneakyThrows
     private void assertTransformed(ConsumerRecord<byte[], byte[]> consumerRecord) {
-        @Valid Bar order = objectMapper.readValue(consumerRecord.value(), Bar.class);
-        Assert.isTrue(order.getName().equals("tom"), "the conversion should be done");
+        @Valid Bar bar = objectMapper.readValue(consumerRecord.value(), Bar.class);
+        Assert.isTrue(bar.getName().equals("tom"), "the conversion should be done");
     }
 }
