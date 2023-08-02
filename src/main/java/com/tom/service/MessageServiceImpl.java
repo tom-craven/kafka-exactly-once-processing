@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -62,10 +63,7 @@ public class MessageServiceImpl implements MessageService {
         Set<ConstraintViolation<Foo>> violations = validator.validate(foo);
 
         if (!violations.isEmpty()) {
-            StringBuilder sb = new StringBuilder();
-            for (ConstraintViolation<Foo> constraintViolation : violations) {
-                sb.append(constraintViolation.getMessage());
-            }
+            String sb = violations.stream().map(ConstraintViolation::getMessage).collect(Collectors.joining());
             throw new ConstraintViolationException("Error occurred: " + sb, violations);
         }
         return foo;

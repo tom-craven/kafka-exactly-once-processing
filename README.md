@@ -46,7 +46,7 @@ Example:
 1. **Clone the Repo**
 
 ```sh
-git clone git@github.com:tom-craven/exactly-once-processing.git
+git clone git@github.com:tom-craven/kafka-exactly-once-processing.git
 ```
 
 1. **Build via gradle**
