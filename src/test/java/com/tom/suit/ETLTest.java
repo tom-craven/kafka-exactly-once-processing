@@ -26,7 +26,7 @@ import java.util.concurrent.ExecutionException;
 
 @Slf4j
 @ActiveProfiles("test")
-public class ETLTests extends EmbeddedKafkaTestContext {
+public class ETLTest extends EmbeddedKafkaTestContext {
 
     @Autowired
     byte[] fooMessage;
@@ -59,7 +59,7 @@ public class ETLTests extends EmbeddedKafkaTestContext {
     @Test
     public void givenInvalidFooWhenMessageIsSentThenExceptionIsThrown() {
 
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        @Cleanup val outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
         @Cleanup val consumer = getConsumerFactory().createConsumer();
         consumer.subscribe(Collections.singleton(OUTPUT_TOPIC));
@@ -76,7 +76,6 @@ public class ETLTests extends EmbeddedKafkaTestContext {
         consumer.commitSync();
 
         Assert.isTrue(outputStream.toString().contains("FooDeserializationException"), "The Foo should be invalid");
-        outputStream.close();
         System.setOut(new PrintStream(System.out));
     }
 

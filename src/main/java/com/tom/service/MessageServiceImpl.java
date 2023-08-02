@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 public class MessageServiceImpl implements MessageService {
-    final ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
     private final Validator validator;
 
     public MessageServiceImpl(ObjectMapper objectMapper, Validator validator) {
@@ -62,10 +62,10 @@ public class MessageServiceImpl implements MessageService {
     public Foo validateFoo(Foo foo) {
         Set<ConstraintViolation<Foo>> violations = validator.validate(foo);
 
-        if (!violations.isEmpty()) {
-            String sb = violations.stream().map(ConstraintViolation::getMessage).collect(Collectors.joining());
-            throw new ConstraintViolationException("Error occurred: " + sb, violations);
-        }
-        return foo;
+        if (violations.isEmpty())
+            return foo;
+
+        String sb = violations.stream().map(ConstraintViolation::getMessage).collect(Collectors.joining());
+        throw new ConstraintViolationException("Error occurred: " + sb, violations);
     }
 }

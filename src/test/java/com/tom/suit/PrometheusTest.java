@@ -61,7 +61,7 @@ public class PrometheusTest extends EmbeddedKafkaTestContext {
         val responseBefore = Objects.requireNonNull(webClient.get()
                 .uri("http://localhost:" + port + "/actuator/metrics/dlq.counter").retrieve().bodyToMono(JsonNode.class).block());
 
-        val expected = Float.parseFloat(responseBefore.get("measurements").get(0).get("value").asText())+1;
+        val expected = Float.parseFloat(responseBefore.get("measurements").get(0).get("value").asText()) + 1;
 
         testProducer.sendDefault("BAD".getBytes(StandardCharsets.UTF_8)).get();
 

@@ -1,7 +1,6 @@
 package com.tom.config;
 
 import com.tom.MessageProcessingApplication;
-import com.tom.config.TestConfig;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.apache.kafka.clients.consumer.ConsumerConfig;

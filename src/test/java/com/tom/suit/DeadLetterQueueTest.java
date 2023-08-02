@@ -23,9 +23,6 @@ public class DeadLetterQueueTest extends EmbeddedKafkaTestContext {
     @Autowired
     MessageService messageService;
 
-    @Autowired
-    KafkaTemplate<byte[], byte[]> kt;
-
     private KafkaTemplate<byte[], byte[]> testProducer;
 
     @BeforeEach
@@ -36,7 +33,7 @@ public class DeadLetterQueueTest extends EmbeddedKafkaTestContext {
 
     @AfterEach
     public void cleanUp() {
-        kt.destroy();
+        testProducer.destroy();
     }
 
     @Test

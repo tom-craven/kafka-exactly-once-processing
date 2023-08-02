@@ -30,13 +30,7 @@ public class ErrorHandlerTest extends EmbeddedKafkaTestContext {
     private static final CharSequence LOGS_ERROR_OFFSET = "ERROR - PARTITION";
 
     @Autowired
-    ObjectMapper objectMapper;
-
-    @Autowired
     MessageService messageService;
-
-    @Autowired
-    KafkaTemplate<byte[], byte[]> kt;
 
     private KafkaTemplate<byte[], byte[]> testProducer;
 
@@ -48,20 +42,19 @@ public class ErrorHandlerTest extends EmbeddedKafkaTestContext {
 
     @AfterEach
     public void cleanUp() {
-        kt.destroy();
+        testProducer.destroy();
     }
-
 
     @Test
     public void givenErrorHandlerWhenExecutionFailedThenSeekToCurrentOffsetAndLog() throws ExecutionException, InterruptedException, IOException {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        @Cleanup val outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
         @Cleanup val consumer = getConsumerFactory().createConsumer();
 
         consumer.subscribe(Collections.singleton(OUTPUT_TOPIC));
 
         testProducer.sendDefault("ERRONEOUS".getBytes(StandardCharsets.UTF_8)).get();
-        testProducer.flush();
+
         Thread.sleep(3000);
 
         consumer.poll(Duration.ofSeconds(5));
@@ -69,7 +62,6 @@ public class ErrorHandlerTest extends EmbeddedKafkaTestContext {
 
         Assert.isTrue(outputStream.toString().contains(SEEKS_TO_CURRENT_OFFSET), "Seeks to the current offset after exception");
         Assert.isTrue(outputStream.toString().contains(LOGS_ERROR_OFFSET), "Logs the offset of the error");
-        outputStream.close();
         System.setOut(new PrintStream(System.out));
     }
 }
