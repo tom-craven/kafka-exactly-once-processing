@@ -79,7 +79,7 @@ Execute the following command from project root:
 
 ### Testing
 
-*Provided test cases*
+*Test cases do not need local Kafka*
 
 1. **Dead letter queue test**
    Sending erroneous messages to the deal letter queue
