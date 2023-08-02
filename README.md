@@ -28,7 +28,7 @@ The Test classes use an embedded Kafka Broker for easy local development and has
 
 ### Prerequisites
 
-* Java 17
+* [Java 17](https://adoptium.net/)
 * Gradle >= 7.4
 * Docker (optional)
 * [Kafka](https://kafka.apache.org/quickstart)
@@ -65,9 +65,13 @@ git clone git@github.com:tom-craven/kafka-exactly-once-processing.git
 
 ### Running
 
-**Start the service**
+**1. Start the local Kafka**
 
-Execute the following command from the parent directory:
+See guide in prerequisites
+
+**2. Start the service**
+
+Execute the following command from project root:
 
 ```sh
 ./gradlew bootRun
@@ -132,12 +136,6 @@ docker rm message-processing-application
 ```
 
 ## Built With
-
-_Will provide the user with a list of sources and documentation used when building the project_
-
-Example:
-
-For further reference, please consider the following:
 
 * [Spring Boot](https://docs.spring.io/spring-boot/docs/3.1.x/reference/html/)
 * [Gradle](https://docs.gradle.org/current/userguide/userguide.html)
